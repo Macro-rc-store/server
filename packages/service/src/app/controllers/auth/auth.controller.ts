@@ -53,13 +53,13 @@ class AuthController extends BaseController {
       });
     }
 
-    if(responseRecaptcha.error) {
+    if(responseRecaptcha.status === "error") {
       return error({
         message: 'reCaptcha has error. Please come back later!'
       });
     }
 
-    if(!responseRecaptcha.success) {
+    if(responseRecaptcha.status != "success") {
       return error({
         message: 'You have not verified the recaptcha. Please verify!'
       });
@@ -69,7 +69,7 @@ class AuthController extends BaseController {
       data: {
         token: token
       },
-      message: 'Login success'
+      message: 'Login success!'
     });
   }
 
@@ -83,13 +83,13 @@ class AuthController extends BaseController {
       });
     }
 
-    if(responseRecaptcha.error) {
+    if(responseRecaptcha.status === "error") {
       return error({
         message: 'reCaptcha has error. Please come back later!'
       });
     }
 
-    if(!responseRecaptcha.success) {
+    if(responseRecaptcha.status != "success") {
       return error({
         message: 'You have not verified the recaptcha. Please verify!'
       });

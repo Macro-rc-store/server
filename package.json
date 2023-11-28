@@ -57,5 +57,18 @@
     "passport-jwt": "^4.0.1",
     "socket.io": "4.1.2",
     "winston": "^3.8.2"
-  }
+  },
+  "name": "macro-rc-store-server",
+  "description": "- NodeJS v16.18.0\r - MongoDB v3.6.8",
+  "version": "1.0.0",
+  "main": "packages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Macro-rc-store/server.git"
+  },
+  "keywords": [
+    "macro-rc-store"
+  ],
+  "author": "nguyenphuong99",
+  "license": "ISC"
 }

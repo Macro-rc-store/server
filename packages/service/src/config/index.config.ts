@@ -11,9 +11,6 @@ const config = {
   mongo: {
     uri: process.env.MONGO_URI
   },
-  worker: {
-    key: process.env.WORKER_KEY
-  },
   jwt: {
     secretKey: process.env.JWT_SECRET_KEY,
     defaultExpired: process.env.JWT_DEFAULT_EXPIRED,
