@@ -3,6 +3,7 @@ import BaseController, { UtilityFunctions } from '../../../core/controller/index
 import { body, query } from 'express-validator';
 import AccountService from '../../../domain/services/account.service';
 import { IAccountLoginDTO, IAccountRegisterDTO } from '../../dtos/account.dto';
+import { reCaptchaStatus } from '../../dtos/reCaptcha.dto';
 
 class AuthController extends BaseController {
   private service: AccountService;
@@ -53,13 +54,13 @@ class AuthController extends BaseController {
       });
     }
 
-    if(responseRecaptcha.status === "error") {
+    if(responseRecaptcha.status == reCaptchaStatus.ERROR) {
       return error({
         message: 'reCaptcha has error. Please come back later!'
       });
     }
 
-    if(responseRecaptcha.status != "success") {
+    if(responseRecaptcha.status != reCaptchaStatus.SUCCESS) {
       return error({
         message: 'You have not verified the recaptcha. Please verify!'
       });
@@ -83,13 +84,13 @@ class AuthController extends BaseController {
       });
     }
 
-    if(responseRecaptcha.status === "error") {
+    if(responseRecaptcha.status == reCaptchaStatus.ERROR) {
       return error({
         message: 'reCaptcha has error. Please come back later!'
       });
     }
 
-    if(responseRecaptcha.status != "success") {
+    if(responseRecaptcha.status != reCaptchaStatus.SUCCESS) {
       return error({
         message: 'You have not verified the recaptcha. Please verify!'
       });
