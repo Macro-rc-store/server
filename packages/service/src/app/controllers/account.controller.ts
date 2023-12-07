@@ -11,6 +11,7 @@ class AccountController extends BaseController {
     super();
     this.initialize([
       ['GET', '/session', this.session],
+      ['GET', '/get-info', this.getAccountInfo],
       ['POST', '/change-password', this.changePassword, [
         body('currentPassword')
           .notEmpty().withMessage('current password is required'),
@@ -50,11 +51,28 @@ class AccountController extends BaseController {
     });
   }
 
+  private async getAccountInfo(req: Request, res: Response, {success, error}: UtilityFunctions) {
+    const user = req.user as Required<{ username: string }>;
+
+    if (!user) {
+      return error({
+        message: 'You are not logged in!'
+      });
+    }
+
+    const accountInfo = await this.service.getInfo(user.username);
+
+    return success({
+      data: accountInfo,
+      message: 'Get account information success!'
+    });
+  }
+
   private async changePassword(req: Request, res: Response, {success, error}: UtilityFunctions) {
     const params: Required<IAccountChangePasswordDTO> = req.body as unknown as Required<IAccountChangePasswordDTO>;
     const user = req.user as Required<{
-      email: string,
-      username: string
+      id: string,
+      username: string,
     }>;
     const {currentPassword, newPassword, confirmPassword} = params;
 
@@ -71,7 +89,7 @@ class AccountController extends BaseController {
       });
     }
 
-    await this.service.createOrUpdate(user.email, user.username, newPassword);
+    await this.service.changePassword(user.username, newPassword);
     return success({
       message: 'Change password success!'
     });
