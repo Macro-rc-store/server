@@ -13,18 +13,22 @@ class AuthController extends BaseController {
     this.initialize([
       ['POST', '/login', this.login, [
         body('username')
-          .notEmpty().withMessage('Username is required!'),
+          .notEmpty().withMessage('Phải nhập Username!')
+          .custom(value => /^[a-zA-Z0-9]+$/.test(value)).withMessage('Username không được chứa ký tự đặc biệt!'),
         body('password')
-          .notEmpty().withMessage('Password is required!')
+          .notEmpty().withMessage('Phải nhập Password!')
       ]],
       ['POST', '/register', this.register, [
         body('email')
-          .notEmpty().withMessage('Email is required!')
-          .isEmail().withMessage('Email format incorrect!'),
+          .notEmpty().withMessage('Phải nhập Email!')
+          .isEmail().withMessage('Sai định dạng Email!'),
         body('username')
-          .notEmpty().withMessage('Username is required!'),
+          .notEmpty().withMessage('Phải nhập Username!')
+          .isLength({ min: 6, max: 25 }).withMessage('Username phải từ 6-25 ký tự!')
+          .custom(value => /^[a-zA-Z0-9]+$/.test(value)).withMessage('Username không được chứa ký tự đặc biệt!'),
         body('password')
-          .notEmpty().withMessage('Password is required!'),
+          .notEmpty().withMessage('Phải nhập Password!')
+          .isLength({ min: 8, max: 30 }).withMessage('Password phải từ 8-30 ký tự!'),
       ]]
     ]);
     

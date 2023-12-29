@@ -2,6 +2,7 @@ import AccountRepository from "../repositories/account.repository";
 import config from '../../config/index.config';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import { AccountRole } from "../entities/account.entity";
 
 class AccountService {
   repository: AccountRepository;
@@ -41,8 +42,11 @@ class AccountService {
 
     const payload = {
       id: account._id,
-      username: account.username
+      email: account.email,
+      username: account.username,
+      role: account.role
     };
+
     const token = jwt.sign(
       payload, 
       this.jwtSecretKey, 
@@ -64,13 +68,14 @@ class AccountService {
     return true;
   }
 
-  async createOrUpdate(email: string, username: string, password: string, balance: number = 0) {
+  async createOrUpdate(email: string, username: string, password: string, role: string = AccountRole.USER, balance: number = 0) {
     await this.repository.updateOne({
       username
     }, {
       email,
       username,
       password: this.hashPassword(password),
+      role,
       balance
     }, {
       upsert: true
