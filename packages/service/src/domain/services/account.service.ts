@@ -33,8 +33,8 @@ class AccountService {
     return payload;
   }
 
-  async authenticate(username: string, password: string, remember?: boolean) {
-    const account = await this.repository.findOne({username, password: this.hashPassword(password)});
+  async authenticate(username: string, password: string, role: string, remember?: boolean) {
+    const account = await this.repository.findOne({username, password: this.hashPassword(password), role});
 
     if (!account) {
       return false;
@@ -82,9 +82,10 @@ class AccountService {
     });
   }
 
-  async changePassword(username: string, newPassword: string) {
+  async changePassword(username: string, newPassword: string, role: string) {
     await this.repository.updateOne({
       username,
+      role
     }, {
       password: this.hashPassword(newPassword),
     });

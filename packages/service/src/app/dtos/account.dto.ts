@@ -4,6 +4,7 @@ export interface IAccountLoginDTO {
   username: string;
   password: string;
   remember: boolean;
+  role: string;
   responseRecaptcha: IRecaptchaDTO;
 }
 
@@ -17,6 +18,7 @@ export interface IAccountRegisterDTO {
 export interface IAuthenticatedUser {
   id: string;
   username: string;
+  role: string;
 }
 
 export interface IAccountChangePasswordDTO {

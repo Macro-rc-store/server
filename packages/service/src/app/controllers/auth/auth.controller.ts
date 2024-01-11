@@ -48,9 +48,9 @@ class AuthController extends BaseController {
 
   private async login(req: Request, res: Response, {success, error}: UtilityFunctions) {
     const params: Required<IAccountLoginDTO> = req.body as unknown as Required<IAccountLoginDTO>;
-    const {username, password, remember, responseRecaptcha} = params;
+    const {username, password, remember, role, responseRecaptcha} = params;
     
-    const token = await this.service.authenticate(username, password, remember as boolean);
+    const token = await this.service.authenticate(username, password, role, remember as boolean);
 
     if (!token) {
       return error({

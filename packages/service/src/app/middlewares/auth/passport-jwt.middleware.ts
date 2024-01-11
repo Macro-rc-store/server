@@ -13,7 +13,8 @@ const strategy = new Strategy({
 }, function(payload: AccountDocument, next) {
   const user: IAuthenticatedUser = {
     id: payload.id,
-    username: payload.username
+    username: payload.username,
+    role: payload.role
   };
 
   next(null, user);
